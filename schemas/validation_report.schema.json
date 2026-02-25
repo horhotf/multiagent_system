@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/mas/validation_report.schema.json",
+  "title": "ValidationReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["segments", "violations", "score"],
+  "properties": {
+    "segments": { "$ref": "https://local/mas/text_segmentation.schema.json" },
+    "violations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/violation" },
+      "default": []
+    },
+    "score": { "type": "number", "minimum": 0, "maximum": 1 }
+  },
+  "$defs": {
+    "violation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity", "message", "segment_id"],
+      "properties": {
+        "code": { "type": "string" },
+        "severity": { "type": "string", "enum": ["info", "warning", "error"] },
+        "message": { "type": "string" },
+        "segment_id": { "type": "string" },
+        "suggestion": { "type": ["string", "null"], "default": null }
+      }
+    }
+  }
+}

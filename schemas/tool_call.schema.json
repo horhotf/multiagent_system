@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/mas/tool_call.schema.json",
+  "title": "ToolCall",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["task_id", "tool", "args"],
+  "properties": {
+    "task_id": { "type": "string", "minLength": 1 },
+    "tool": { "type": "string", "minLength": 1 },
+    "args": { "type": "object", "additionalProperties": true },
+    "context": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "trace_id": { "type": "string" },
+        "locale": { "type": "string", "default": "ru" },
+        "strict": { "type": "boolean", "default": true }
+      }
+    }
+  }
+}

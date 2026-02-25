@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/mas/object_generation_request.schema.json",
+  "title": "ObjectGenerationRequest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["requirements_text"],
+  "properties": {
+    "object_type": { "type": ["string", "null"], "default": null },
+    "requirements_text": { "type": "string", "minLength": 1 },
+    "strict": { "type": "boolean", "default": true },
+    "max_repair_iterations": { "type": "integer", "minimum": 0, "maximum": 10, "default": 3 }
+  }
+}

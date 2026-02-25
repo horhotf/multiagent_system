@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/mas/evidence.schema.json",
+  "title": "EvidenceItem",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_type", "ref", "snippet", "score"],
+  "properties": {
+    "source_type": { "type": "string", "enum": ["web", "qdrant", "db", "template", "user"] },
+    "ref": { "type": "string", "minLength": 1 },
+    "snippet": { "type": "string", "minLength": 1 },
+    "score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "meta": { "type": "object", "additionalProperties": true, "default": {} }
+  }
+}

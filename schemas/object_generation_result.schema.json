@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local/mas/object_generation_result.schema.json",
+  "title": "ObjectGenerationResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["object_type", "object_json", "provenance", "warnings"],
+  "properties": {
+    "object_type": { "type": "string", "minLength": 1 },
+    "object_json": { "type": "object", "additionalProperties": true },
+    "provenance": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/prov" },
+      "default": []
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/warn" },
+      "default": []
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1, "default": 0.7 }
+  },
+  "$defs": {
+    "prov": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "source", "ref"],
+      "properties": {
+        "path": { "type": "string", "minLength": 1, "description": "JSONPath" },
+        "source": { "type": "string", "enum": ["user", "db", "qdrant", "template", "default", "inferred"] },
+        "ref": { "type": "string", "minLength": 1 },
+        "note": { "type": "string" }
+      }
+    },
+    "warn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "path": { "type": ["string", "null"], "default": null },
+        "message": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
