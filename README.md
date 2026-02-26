@@ -1,13 +1,25 @@
-# Multi-agent System Spec Pack
+# Multi-Agent Orchestrator MVP
 
-This archive contains:
-- `schemas/` JSON Schemas for plans, tool calls, evidence, object generation, text segmentation & validation.
-- `prompts/` System prompts for Planner/Router/Object generation/Repair/Text segmentation & validation.
+FastAPI-based MVP for local multi-agent orchestration with Docker Compose.
 
-Intended use:
-1) Wire schemas into your orchestrator (Pydantic models + jsonschema validation).
-2) Store prompts in your codebase and call LLM via aider chat / OpenAI-compatible endpoint.
-3) Build tools: Qdrant (docs/tables spaces), Postgres queries, Yandex search, image & pptx generators.
+## Components
+- API (`FastAPI`, Python 3.11)
+- PostgreSQL (tasks, steps, artifacts, schemas/templates/cache)
+- Qdrant (collections: `docs_space`, `tables_space`)
+- LLM integration via OpenAI-compatible `/chat/completions` endpoint (aider chat compatible)
 
-Note: `_warnings` / `_repair_note` fields require schema allowance if you set additionalProperties=false.
-A common approach is to keep warnings in the pipeline result envelope, not inside the object JSON.
+## Run
+```bash
+docker compose up --build
+```
+
+## API
+- `POST /v1/query` (`mode=auto|json_object|search|validate_text|image|pptx`)
+- `POST /v1/object/generate`
+- `POST /v1/text/validate`
+- `GET /v1/artifacts/{id}`
+
+## Tests
+```bash
+pytest -q
+```
